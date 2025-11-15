@@ -1,0 +1,175 @@
+body {
+    margin: 0;
+    background-color: #FFF5F5;
+}
+/* HEADER */
+header, footer{
+    position: sticky;
+    top: 0;
+    padding: 15px;
+    z-index: 1000;
+    background: #FFF5F5;
+     -webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+}
+.header__img{
+    height: 250px;
+    width: 250px;
+}
+.page {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content{
+    width: 100%;
+    max-width: 100%;      /* убираем ограничение по высоте */
+    margin: 0;            /* убираем автоматический центринг */
+    padding: 40px 20px;
+
+    flex: 1 1 auto;
+}
+
+/* POSTS */
+element.style {
+}
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+.mx-auto {
+    margin-right: auto !important;
+    margin-left: auto !important;
+}
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+img, svg {
+    vertical-align: middle;
+}
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+svg[Attributes Style] {
+    height: 500;
+    width: 500;
+}
+user agent stylesheet
+svg:not(:root) {
+    overflow-clip-margin: content-box;
+    overflow: hidden;
+}
+.row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex
+;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+    margin-right: calc(-.5 * var(--bs-gutter-x));
+    margin-left: calc(-.5 * var(--bs-gutter-x));
+    -webkit-box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.5);
+        box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.5);
+}
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    width: 100%;
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+/* MAP */
+#map {
+    height: 70vh;      /* 70% высоты окна браузера */
+    width: 100%;
+    z-index: 50;
+    border-radius: 8px;
+}
+
+
+.map-container {
+    position: relative;
+    z-index: 50;
+    margin: 20px 0;
+}
+
+.controls {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* --- Широкий макет только для страницы карты --- */
+
+.map-page {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin: 0;
+}
+
+/* Плашка фильтров — по центру и над картой */
+.map-page .controls {
+    max-width: 700px;
+    margin: 0 auto 20px;
+    z-index: 60;
+}
+
+/* Большая широкая карта */
+.map-page #map {
+    height: 70vh;        /* будет выше дефолтного, если он прописан раньше */
+    width: 100%;
+    border-radius: 8px;
+}
+
+/* Мобильная адаптация */
+@media (max-width: 768px) {
+    .map-page #map {
+        height: 60vh;
+    }
+    .map-page .controls {
+        max-width: 100%;
+    }
+}
+
+.filter-group {
+    margin-bottom: 10px;
+}
+
+.popup-content {
+    min-width: 250px;
+}
+
+.popup-content h3 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+.leaflet-popup-content {
+    margin: 15px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    #map {
+        height: 400px;
+    }
+}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Добавление записи
+{% endblock %}
+
+{% block content %}
+<h1>Все НКО:</h1>
+
+
+<div class="row featurette">
+
+    {% for post in posts %}
+    <div class="col-md-7">
+        <h2 class="featurette-heading fw-normal lh-1">
+            {{post.name_nko}}
+            <span class="text-body-secondary">{{post.location}}.</span>
+        </h2>
+        <p class="lead">
+            <li>{{post.activity}}</li>
+            <li>{{post.contact_phone}}</li>
+            <li>{{post.links}}</li>
+        </p>
+    </div>
+    <div class="col-md-5">
+        <svg aria-label="Placeholder: 500x500" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" height="500" preserveAspectRatio="xMidYMid slice" role="img" width="500" xmlns="http://www.w3.org/2000/svg">
+            <title>{{post.Photo_logo}}</title>
+            <rect width="100%" height="100%" fill="var(--bs-secondary-bg)"></rect>
+            <text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500
+            </text>
+        </svg>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
