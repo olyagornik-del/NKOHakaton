@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Все организации
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Все некоммерческие организации</h1>
+
+    <!-- Фильтры -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Фильтры</h5>
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label for="city" class="form-label">Город:</label>
+                    <select name="city" id="city" class="form-select">
+                        <option value="all">Все города</option>
+                        {% for city in cities %}
+                        <option value="{{ city }}" {% if selected_city == city %}selected{% endif %}>
+                            {{ city }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="category" class="form-label">Направление:</label>
+                    <select name="category" id="category" class="form-select">
+                        <option value="all">Все направления</option>
+                        {% for category in categories %}
+                        <option value="{{ category }}" {% if selected_category == category %}selected{% endif %}>
+                            {{ category }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary me-2">Применить</button>
+                    <a href="{{ url_for('organizations') }}" class="btn btn-outline-secondary">Сбросить</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Счетчик организаций -->
+    <div class="mb-3">
+        <strong>Найдено организаций: {{ organizations|length }}</strong>
+    </div>
+
+    <!-- Список организаций -->
+    {% if organizations %}
+        <div class="row">
+            {% for org in organizations %}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ org.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            <span class="badge bg-primary">{{ org.category }}</span>
+                            <span class="badge bg-secondary">{{ org.city }}</span>
+                        </h6>
+
+                        {% if org.short_description %}
+                        <p class="card-text">{{ org.short_description }}</p>
+                        {% elif org.description %}
+                        <p class="card-text">{{ org.description|truncate(150) }}</p>
+                        {% endif %}
+
+                        {% if org.target_audience %}
+                        <p class="card-text"><small class="text-muted">Целевая аудитория: {{ org.target_audience }}</small></p>
+                        {% endif %}
+                    </div>
+
+                    <div class="card-footer bg-transparent">
+                        <div class="contact-info">
+                            {% if org.phone %}
+                            <div class="mb-1">
+                                <strong>Телефон:</strong> {{ org.phone }}
+                            </div>
+                            {% endif %}
+
+                            {% if org.address %}
+                            <div class="mb-1">
+                                <strong>Адрес:</strong> {{ org.address }}
+                            </div>
+                            {% endif %}
+
+                            {% if org.social_media %}
+                            <div class="mb-1">
+                                <strong>Соцсети:</strong>
+                                <a href="{{ org.social_media }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                    Перейти
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mt-2">
+                            <a href="{{ url_for('map') }}?city={{ org.city }}&search={{ org.name }}"
+                               class="btn btn-sm btn-outline-primary">
+                                Показать на карте
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            Организации не найдены. Попробуйте изменить параметры фильтрации.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+.card {
+    transition: transform 0.2s;
+}
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.contact-info {
+    font-size: 0.9em;
+}
+</style>
+{% endblock %}
