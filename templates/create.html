@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Добавление организации
+{% endblock %}
+
+{% block content %}
+<h1>Добавление новой организации:</h1>
+
+<form method="post" class="form-control">
+    <input type="text" name="name" placeholder="Название организации" class="form-control" required><br>
+
+    <select name="category" class="form-control" required>
+        <option value="">Выберите направление деятельности</option>
+        <option value="Социальная защита">Социальная защита</option>
+        <option value="Экология">Экология и устойчивое развитие</option>
+        <option value="Спорт">Здоровье и спорт</option>
+        <option value="Культура">Культура и образование</option>
+        <option value="Местное сообщество">Местное сообщество</option>
+        <option value="Защита животных">Защита животных</option>
+        <option value="Другое">Другое</option>
+    </select><br>
+
+    <textarea name="short_description" placeholder="Краткое описание (2-3 предложения)" class="form-control" required></textarea><br>
+
+    <textarea name="description" placeholder="Полное описание деятельности" class="form-control"></textarea><br>
+
+    <select name="city" class="form-control" required>
+        <option value="">Выберите город</option>
+        {% for city in cities %}
+        <option value="{{ city }}">{{ city }}</option>
+        {% endfor %}
+    </select><br>
+    <input type="text" name="phone" placeholder="Контактный телефон" class="form-control"><br>
+    <input type="text" name="address" placeholder="Адрес" class="form-control"><br>
+    <input type="text" name="social_media" placeholder="Ссылки на соцсети" class="form-control"><br>
+    <button class="btn btn-primary" type="submit">Добавить организацию</button>
+</form>
+{% endblock %}

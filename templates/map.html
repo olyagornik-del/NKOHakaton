@@ -1,0 +1,118 @@
+<!-- templates/map.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid mt-4 map-page">
+    <h1 class="mb-4">Карта добрых дел</h1>
+
+    <!-- Панель управления -->
+    <div class="controls">
+        <div class="row">
+            <!-- ФИЛЬТР ПО ГОРОДУ (возвращаем к исходному) -->
+            <div class="col-md-4">
+                <div class="filter-group">
+                    <label for="cityFilter">Фильтр по городу:</label>
+                    <select id="cityFilter" class="form-control">
+                        <option value="all">Все города</option>
+                        {% for city in cities %}
+                        <option value="{{ city }}">{{ city }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <!-- НОВЫЙ ФИЛЬТР ПО КАТЕГОРИИ -->
+            <div class="col-md-4">
+                <div class="filter-group">
+                    <label for="categoryFilter">Направление деятельности:</label>
+                    <select id="categoryFilter" class="form-control">
+                        <option value="all">Все направления</option>
+                        {% for category in categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <!-- ПОИСК (возвращаем к исходному) -->
+            <div class="col-md-4">
+                <div class="filter-group">
+                    <label for="searchInput">Поиск по названию:</label>
+                    <input type="text" id="searchInput" class="form-control"
+                           placeholder="Введите название НКО...">
+                </div>
+            </div>
+        </div>
+
+        <!-- КНОПКА ПРИМЕНЕНИЯ ФИЛЬТРОВ (добавляем для удобства) -->
+        <div class="row mt-3">
+            <div class="col-12">
+                <button class="btn btn-primary" onclick="filterOrganizations()">Применить фильтры</button>
+                <button class="btn btn-outline-secondary" onclick="resetFilters()">Сбросить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Контейнер для карты -->
+    <div class="map-container">
+        <div id="map"></div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('create_organization') }}" class="btn btn-primary">
+            + Добавить организацию
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Подключаем Leaflet из CDN -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+<!-- Подключаем наш скрипт карты -->
+<script src="{{ url_for('static', filename='js/map.js') }}"></script>
+
+<script>
+// Дебаунс для поиска
+let searchTimeout;
+function debounceSearch(query) {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        if (query.length >= 2 || query.length === 0) {
+            filterOrganizations();
+        }
+    }, 300);
+}
+
+// Функция сброса фильтров
+function resetFilters() {
+    document.getElementById('cityFilter').value = 'all';
+    document.getElementById('categoryFilter').value = 'all';
+    document.getElementById('searchInput').value = '';
+    filterOrganizations();
+}
+
+// Назначаем обработчики событий после загрузки DOM
+document.addEventListener('DOMContentLoaded', function() {
+    // Инициализируем карту
+    if (document.getElementById('map')) {
+        initMap();
+    } else {
+        console.error('Элемент map не найден!');
+    }
+
+    // Назначаем обработчики для фильтров
+    document.getElementById('cityFilter').addEventListener('change', filterOrganizations);
+    document.getElementById('categoryFilter').addEventListener('change', filterOrganizations);
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+        debounceSearch(e.target.value);
+    });
+});
+</script>
+{% endblock %}
